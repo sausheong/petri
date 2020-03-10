@@ -1,0 +1,35 @@
+<!doctype html><meta charset=utf-8>
+<html>
+    <head>
+        <style>
+            body {
+                font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                margin-left: 40px;
+            }
+            
+            h2 {
+                color: darkslateblue;                              
+            } 
+            img {
+                display: block; 
+                border: 1px solid rgb(201, 210, 213);
+                padding: 10px;
+                border-radius: 10px 10px;
+            }
+            </style>
+        <script src="/public/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript">
+            setInterval(function() {
+                $.get('/frame', function(data) {
+                    $('#image').attr('src', data);
+                });
+            }, {{ . }});
+
+        </script>
+    </head>
+
+    <body>
+        <h2>Simulation</h1>
+        <img id="image" src=""/>
+    </body>
+</html>
