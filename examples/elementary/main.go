@@ -39,26 +39,10 @@ func rule(num, n uint8) uint8 {
 	return (num >> n) & 1
 }
 
-// reverse the order of the bits
-func reverse(n uint8) uint8 {
-	switch n {
-	case 0b001:
-		return 0b100
-	case 0b011:
-		return 0b110
-	case 0b100:
-		return 0b001
-	case 0b110:
-		return 0b011
-	default:
-		return n
-	}
-}
-
 // solving edge cases, if cell has no left neighbour
 func before(n int) int {
 	if (n % w) == 0 {
-		return 0
+		return w - 1
 	} else {
 		return n - 1
 	}
@@ -80,19 +64,19 @@ func (m *MySim) Process() {
 		// figure which pattern to use
 		c = 0
 		if m.Units[before(n)].RGB() == on {
-			c = c + 1
+			c = c + 4
 		}
 		if m.Units[n].RGB() == on {
 			c = c + 2
 		}
 		if m.Units[after(n)].RGB() == on {
-			c = c + 4
+			c = c + 1
 		}
 		// doesn't work for the last row, so just stop at the row before
 		if n < w*(w-1) {
 			// set the cell below the current cell accordingly
 			set := n + w
-			if rule(uint8(*ruleNum), reverse(c)) == 1 {
+			if rule(uint8(*ruleNum), c) == 1 {
 				m.Units[set].Set(on)
 			} else {
 				m.Units[set].Set(off)
