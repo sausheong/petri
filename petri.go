@@ -129,7 +129,7 @@ func serve(sim Simulator) {
 	// start generating frames in a new goroutine
 	go generateFrames(sim)
 	// open in default browser
-	go open("http://0.0.0.0:" + strconv.Itoa(*Port))
+	go open("http://127.0.0.1:" + strconv.Itoa(*Port))
 	server.ListenAndServe()
 }
 
