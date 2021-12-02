@@ -101,6 +101,12 @@ func getB(i int) uint8 {
 	return uint8(i & 0x0000FF)
 }
 
+// GetRGB returns the RGB of the color integer, it's a convenience method
+// that combines getR, getG and getB
+func GetRGB(i int) (r uint8, g uint8, b uint8) {
+	return uint8((i >> 16) & 0x0000FF), uint8((i >> 8) & 0x0000FF), uint8(i & 0x0000FF)
+}
+
 // FindEmpty find all empty cells in the simlator
 func FindEmpty() (sim Simulator, empty []int) {
 	for n, cell := range sim.Cells() {

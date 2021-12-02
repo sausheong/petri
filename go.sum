@@ -7,9 +7,6 @@ github.com/llgcode/draw2d v0.0.0-20200110163050-b96d8208fcfc h1:v8qNcPPBCFppcuCW
 github.com/llgcode/draw2d v0.0.0-20200110163050-b96d8208fcfc/go.mod h1:mVa0dA29Db2S4LVqDYLlsePDzRJLDfdhVZiI15uY0FA=
 github.com/llgcode/ps v0.0.0-20150911083025-f1443b32eedb h1:61ndUreYSlWFeCY44JxDDkngVoI7/1MVhEl98Nm0KOk=
 github.com/llgcode/ps v0.0.0-20150911083025-f1443b32eedb/go.mod h1:1l8ky+Ew27CMX29uG+a2hNOKpeNYEQjjtiALiBlFQbY=
-github.com/zserge/webview v0.0.0-20200301213939-0eb933f25974 h1:VVXPkGjVO44XcS48N1kuHaiffYqFU8b9eftRywulWjU=
-github.com/zserge/webview v0.0.0-20200301213939-0eb933f25974/go.mod h1:qxc/5N3SOFrs3q+EAVHqaJ1oLbm+hHlDhfhRYg8x7wQ=
-golang.org/x/image v0.0.0-20180708004352-c73c2afc3b81 h1:00VmoueYNlNz/aHIilyyQz/MHSqGoWJzpFv/HW8xpzI=
 golang.org/x/image v0.0.0-20180708004352-c73c2afc3b81/go.mod h1:ux5Hcp/YLpHSI86hEcLt0YII63i6oz57MZXIpbrjZUs=
 golang.org/x/image v0.0.0-20200119044424-58c23975cae1 h1:5h3ngYt7+vXCDZCup/HkCQgW5XwmSvR/nA2JmJ0RErg=
 golang.org/x/image v0.0.0-20200119044424-58c23975cae1/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
