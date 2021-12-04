@@ -13,9 +13,11 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"syscall"
 	"time"
 
 	"github.com/llgcode/draw2d/draw2dimg"
@@ -39,7 +41,15 @@ var Port *int
 // Shape is the shape of the cell
 var Shape *string
 
+// Label to send to the simulation display
+var Label string
+
 var frame string // display frame
+
+type Data struct {
+	Refresh int
+	Label   string
+}
 
 func init() {
 
@@ -53,6 +63,7 @@ func init() {
 	Width = flag.Int("w", 36, "the number of cells on one side of the image")
 	Port = flag.Int("p", 12345, "tthe port where the simulation server starts")
 	Shape = flag.String("shape", "square", "shape of the cell")
+
 }
 
 // Run executes the simulation
@@ -69,6 +80,7 @@ type Simulator interface {
 	Cells() []Cellular                          //  an array of all cells in the simulation
 	CreateCell(int, int, int, int) Cellular     // create a cell given x, y and color
 	CreateCellWithIndex(int, int, int) Cellular // create a cell given the index and color
+	Exit()                                      // execute on exit of simulation
 }
 
 // Cellular is a representation of a cell
@@ -134,6 +146,16 @@ func serve(sim Simulator) {
 	fmt.Println("ctrl-c to stop simulation.")
 	// start generating frames in a new goroutine
 	go generateFrames(sim)
+
+	// to capture ctrl-c and save data before exiting
+	sig := make(chan os.Signal)
+	signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-sig
+		sim.Exit()
+		os.Exit(1)
+	}()
+
 	// open in default browser
 	go open("http://0.0.0.0:" + strconv.Itoa(*Port))
 	server.ListenAndServe()
@@ -142,7 +164,11 @@ func serve(sim Simulator) {
 // index for web server
 func index(w http.ResponseWriter, r *http.Request) {
 	t, _ := template.ParseFiles(*dir + "/public/index.html")
-	t.Execute(w, *Refresh)
+	d := Data{
+		Refresh: *Refresh,
+		Label:   Label,
+	}
+	t.Execute(w, d)
 }
 
 // push the frame to the browser
