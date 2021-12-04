@@ -5,6 +5,11 @@
 *.so
 *.dylib
 
+examples/basic/basic
+examples/colorful
+examples/elementary/elementary
+examples/gun/gun
+
 # Test binary, built with `go test -c`
 *.test
 

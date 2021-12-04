@@ -53,6 +53,12 @@ func (s *Sim) Cells() []Cellular {
 	return s.Units
 }
 
+// Exit executes when the simulation exits
+// It catches the ctrl-c signal and runs this before exiting
+func (s *Sim) Exit() {
+	// execute this on exit
+}
+
 // Init creates the initial cell population
 func (s *Sim) Init() {
 	rand.Seed(time.Now().UTC().UnixNano())
