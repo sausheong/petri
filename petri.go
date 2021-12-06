@@ -80,7 +80,7 @@ type Simulator interface {
 	Cells() []Cellular                          //  an array of all cells in the simulation
 	CreateCell(int, int, int, int) Cellular     // create a cell given x, y and color
 	CreateCellWithIndex(int, int, int) Cellular // create a cell given the index and color
-	Exit()                                      // execute on exit of simulation
+	Exit()                                      // execute on exit of simulation with ctrl-c
 }
 
 // Cellular is a representation of a cell
