@@ -57,6 +57,7 @@ func (s *Sim) Cells() []Cellular {
 // It catches the ctrl-c signal and runs this before exiting
 func (s *Sim) Exit() {
 	// execute this on exit
+	// empty method
 }
 
 // Init creates the initial cell population
