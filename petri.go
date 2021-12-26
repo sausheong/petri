@@ -23,27 +23,15 @@ import (
 	"github.com/llgcode/draw2d/draw2dimg"
 )
 
-// directory where the public directory is in
-var dir *string
+var dir *string    // directory where the public directory is in
+var CellSize *int  // CellSize is the radius of each cell
+var Width *int     // Width is the number of cells on one side of the image
+var Refresh *int   // Refresh is the number of milliseconds per refresh
+var Port *int      // Port is the port where the simulation server starts
+var Shape *string  // Shape is the shape of the cell
+var Headless *bool // Headless determines if simulation runs headless or not
 
-// CellSize is the radius of each cell
-var CellSize *int
-
-// Width is the number of cells on one side of the image
-var Width *int
-
-// Refresh is the number of milliseconds per refresh
-var Refresh *int
-
-// Port is the port where the simulation server starts
-var Port *int
-
-// Shape is the shape of the cell
-var Shape *string
-
-// Label to send to the simulation display
-var Label string
-
+var Label string // Label to send to the simulation display
 var frame string // display frame
 
 type Data struct {
@@ -52,7 +40,6 @@ type Data struct {
 }
 
 func init() {
-
 	d, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		log.Fatal(err)
@@ -63,7 +50,7 @@ func init() {
 	Width = flag.Int("w", 36, "the number of cells on one side of the image")
 	Port = flag.Int("p", 12345, "tthe port where the simulation server starts")
 	Shape = flag.String("shape", "square", "shape of the cell")
-
+	Headless = flag.Bool("headless", false, "simulation runs headless if true, default false")
 }
 
 // Run executes the simulation
@@ -157,7 +144,9 @@ func serve(sim Simulator) {
 	}()
 
 	// open in default browser
-	go open("http://0.0.0.0:" + strconv.Itoa(*Port))
+	if !*Headless {
+		go open("http://0.0.0.0:" + strconv.Itoa(*Port))
+	}
 	server.ListenAndServe()
 }
 
@@ -182,9 +171,11 @@ func getFrame(w http.ResponseWriter, r *http.Request) {
 func generateFrames(sim Simulator) {
 	for {
 		sim.Process()
-		img := draw(*Width*(*CellSize)+(*CellSize), sim.Cells())
-		createFrame(img) // create the frame from the sensor
-		time.Sleep(time.Duration(*Refresh) * time.Millisecond)
+		if !*Headless {
+			img := draw(*Width*(*CellSize)+(*CellSize), sim.Cells())
+			createFrame(img) // create the frame from the sensor
+			time.Sleep(time.Duration(*Refresh) * time.Millisecond)
+		}
 	}
 }
 
